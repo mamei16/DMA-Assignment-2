@@ -2,4 +2,5 @@ State changed from NULL to READY
 Traceback (most recent call last):
   File "DMA_2_2.py", line 158, in on_state_changed
     old, new, pending = msg.parse_state_changed()
+TypeError: Couldn't find foreign struct converter for 'cairo.Context'
 
