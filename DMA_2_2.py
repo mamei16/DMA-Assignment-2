@@ -11,8 +11,8 @@ from gi.repository import Gst, Gtk, GLib, GdkX11, GstVideo
 # http://docs.gstreamer.com/display/GstSDK/Basic+tutorial+5%3A+GUI+toolkit+integration
 
 # Define the hard coded file paths
-SOURCE_0 = "/home/thomas/Downloads/sita_SD.mp4"
-SOURCE_1 = "/home/thomas/Downloads/sintel_SD.mp4"
+SOURCE_0 = "/home/dma/Downloads/sita_SD.mp4"
+SOURCE_1 = "/home/dma/Downloads/sintel_SD.mp4"
 OUTPUT = "output.mkv"
 
 
@@ -33,7 +33,7 @@ class Player(object):
             "video/x-raw, width=640, height=480 ! queue ! "
             "videomixer name=vmix sink_0::alpha=1.0 sink_1::alpha=0.5 ! "
             "tee name=t t.src_0 ! queue ! "
-            "xvimagesink name=sink uridecodebin uri=file://{} ! "
+            "glimagesink name=sink uridecodebin uri=file://{} ! "
             "queue ! videoscale ! video/x-raw, width=640, height=480 ! queue ! "
             "vmix. t.src_1 ! queue ! videoconvert ! x264enc tune=zerolatency ! "
             "matroskamux ! queue ! filesink location={}"
