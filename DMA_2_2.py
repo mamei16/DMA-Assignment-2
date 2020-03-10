@@ -11,8 +11,8 @@ from gi.repository import Gst, Gtk, GLib, GdkX11, GstVideo
 # http://docs.gstreamer.com/display/GstSDK/Basic+tutorial+5%3A+GUI+toolkit+integration
 
 # Define the hard coded file paths
-SOURCE_0 = "/home/dma/Downloads/sita_SD.mp4"
-SOURCE_1 = "/home/dma/Downloads/sintel_SD.mp4"
+SOURCE_0 = "/home/mashroom/Downloads/sita_SD.mp4"
+SOURCE_1 = "/home/mashroom/Downloads/sintel_SD.mp4"
 OUTPUT = "output.mkv"
 
 
@@ -33,7 +33,7 @@ class Player(object):
             "video/x-raw, width=640, height=480 ! queue ! "
             "videomixer name=vmix sink_0::alpha=1.0 sink_1::alpha=0.5 ! "
             "tee name=t t.src_0 ! queue ! "
-            "glimagesink name=sink uridecodebin uri=file://{} ! "
+            "gtksink name=sink uridecodebin uri=file://{} ! "
             "queue ! videoscale ! video/x-raw, width=640, height=480 ! queue ! "
             "vmix. t.src_1 ! queue ! videoconvert ! x264enc tune=zerolatency ! "
             "matroskamux ! queue ! filesink location={}"
@@ -79,11 +79,6 @@ class Player(object):
         main_window = Gtk.Window.new(Gtk.WindowType.TOPLEVEL)
         main_window.connect("delete-event", self.on_delete_event)
 
-        video_window = Gtk.DrawingArea.new()
-        video_window.set_double_buffered(False)
-        video_window.connect("realize", self.on_realize)
-        video_window.connect("draw", self.on_draw)
-
         self.slider = Gtk.VScale.new_with_range(0, 1, .01)
         self.slider.set_draw_value(True)
         self.slider_update_signal_id = self.slider.connect(
@@ -96,22 +91,12 @@ class Player(object):
         controls.pack_start(self.slider, True, True, 0)
 
         main_hbox = Gtk.HBox.new(False, 0)
-        main_hbox.pack_start(video_window, True, True, 0)
+        main_hbox.pack_start(self.pipeline.get_by_name("sink").props.widget, True, True, 0)
         main_hbox.pack_start(controls, False, False, 2)
 
         main_window.add(main_hbox)
         main_window.set_default_size(640, 480)
         main_window.show_all()
-
-    # this function is called when the GUI toolkit creates the physical window
-    # that will hold the video. At this point we can retrieve its handler and pass
-    # it to GStreamer
-    def on_realize(self, widget):
-        window = widget.get_window()
-        window_handle = window.get_xid()
-
-        # pass it to playbin, which will forward it to the video sink
-        self.pipeline.get_by_name("sink").set_window_handle(window_handle)
 
     # this function is called when the main window is closed
     def on_delete_event(self, widget, event):
