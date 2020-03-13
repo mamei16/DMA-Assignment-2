@@ -79,7 +79,7 @@ class Player(object):
         main_window = Gtk.Window.new(Gtk.WindowType.TOPLEVEL)
         main_window.connect("delete-event", self.on_delete_event)
 
-        self.slider = Gtk.VScale.new_with_range(0, 1, .01)
+        self.slider = Gtk.HScale.new_with_range(0, 1, .01)
         self.slider.set_draw_value(True)
         self.slider_update_signal_id = self.slider.connect(
             "value-changed", self.on_slider_changed)
