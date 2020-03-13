@@ -90,7 +90,7 @@ class Player(object):
         controls = Gtk.VBox.new(False, 0)
         controls.pack_start(self.slider, True, True, 0)
 
-        main_hbox = Gtk.HBox.new(False, 0)
+        main_hbox = Gtk.VBox.new(False, 0)
         main_hbox.pack_start(self.pipeline.get_by_name("sink").props.widget, True, True, 0)
         main_hbox.pack_start(controls, False, False, 2)
 
