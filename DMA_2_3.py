@@ -11,8 +11,8 @@ from gi.repository import Gst, Gtk, GLib, GdkX11, GstVideo
 # http://docs.gstreamer.com/display/GstSDK/Basic+tutorial+5%3A+GUI+toolkit+integration
 
 # Define the hard coded file paths
-SOURCE_0 = "/home/mashroom/Downloads/sita_SD.mp4"
-SOURCE_1 = "/home/mashroom/Downloads/sintel_SD.mp4"
+SOURCE_0 = "/home/dma/Downloads/sita_SD.mp4"
+SOURCE_1 = "/home/dma/Downloads/sintel_SD.mp4"
 OUTPUT = "output.mkv"
 
 
