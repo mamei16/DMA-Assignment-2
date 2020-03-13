@@ -88,7 +88,7 @@ class Player(object):
         self.streams_list.set_editable(False)
 
         controls = Gtk.VBox.new(False, 0)
-        controls.pack_start(self.slider, True, True, 0)
+        controls.pack_start(self.slider, True, True, 5)
 
         main_hbox = Gtk.VBox.new(False, 0)
         main_hbox.pack_start(self.pipeline.get_by_name("sink").props.widget, True, True, 0)
